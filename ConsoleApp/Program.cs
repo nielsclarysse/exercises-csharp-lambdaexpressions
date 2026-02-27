@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.NetworkInformation;
 
 /* ******************************************* */
@@ -39,7 +40,7 @@ using System.Net.NetworkInformation;
 /* Exercise 5: Using Func */
 /* ********************** */
 
-namespace ConsoleApp
+/*namespace ConsoleApp
 {
     class Program
     {
@@ -60,6 +61,49 @@ namespace ConsoleApp
                 return new string(chars);
             };
             Console.WriteLine(sortFunc("hello world"));
+        }
+    }
+}*/
+
+/* ********************** */
+/* Exercise 6: Using Func */
+/* ********************** */
+
+namespace ConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> fruits = new List<string>() { "apple", "pear", "banana", "strawberry", "lemon" };
+
+            fruits.Where(s => StringMinLength(s, 6))
+                  .ToList()
+                  .ForEach(f => Console.WriteLine(f));
+        }
+
+        static bool StringMinLength(string s, int min) => s.Length >= min;
+    }
+
+    // Extension methods written in the classic way.
+    public static class EnumerableExtensions
+    {
+        public static IEnumerable<T> Where<T>(this IEnumerable<T> source, Predicate<T> predicate)
+        {
+            foreach (T item in source)
+            {
+                if (predicate(item)) yield return item;
+            }
+        }
+
+        public static List<T> ToList<T>(this IEnumerable<T> source)
+        {
+            List<T> list = new List<T>();
+            foreach (T item in source)
+            {
+                list.Add(item);
+            }
+            return list;
         }
     }
 }
